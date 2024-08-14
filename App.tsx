@@ -1,33 +1,38 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect } from 'react';
+import { useReducer } from 'react';
 import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-  const [count, setCount] = useState(0);
-  // useEffect, efeito colateral, monitora a vida da variável
-  useEffect(() => {
-    if(count == 0){
-      Alert.alert("Carrinho", "Seu carrinho está vazio.")
-    }
-  }, [count])
+const reducer = (state: {counter: number;}, 
+  action: {type: string;}) => {
+  switch(action.type){
+    case 'increment':
+      return {
+        counter: state.counter + 1
+      }
+    case 'decrement':
+      return {
+        counter: state.counter - 1
+      }
+    default:
+      return state
+  }
+}
 
-  useEffect(() => {
-    console.log("Não estou monitorando nada específico\nHouve atualização na tela")
-  })
+export default function App() {
+  // estado | despachador de eventos | eventos | valor inicial
+  const [state, dispatch] = useReducer(reducer, {counter: 0})
 
   const incrementCount = () => {
-    setCount(prevState => prevState+1)
+    dispatch({type: 'increment'})
   }
 
   const decrementCount = () => {
-    if (count > 0){
-      setCount(prevState => prevState-1)
-    }
+    dispatch({type: 'decrement'})
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.big}>{count}</Text>
+      <Text style={styles.big}>{state.counter}</Text>
 
       <View style={styles.inline}>
         <Button title='REMOVER' onPress={decrementCount}></Button>
