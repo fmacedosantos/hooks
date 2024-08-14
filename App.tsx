@@ -1,9 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { useState, useEffect } from 'react';
+import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   const [count, setCount] = useState(0);
+  // useEffect, efeito colateral, monitora a vida da variável
+  useEffect(() => {
+    if(count == 0){
+      Alert.alert("Carrinho", "Seu carrinho está vazio.")
+    }
+  }, [count])
+
+  useEffect(() => {
+    console.log("Não estou monitorando nada específico\nHouve atualização na tela")
+  })
 
   const incrementCount = () => {
     setCount(prevState => prevState+1)
