@@ -5,13 +5,21 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 export default function App() {
   const [count, setCount] = useState(0);
 
+  const incrementCount = () => {
+    setCount(prevState => prevState+1)
+  }
+
+  const decrementCount = () => {
+    setCount(prevState => prevState-1)
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.big}>0</Text>
+      <Text style={styles.big}>{count}</Text>
 
       <View style={styles.inline}>
-        <Button title='REMOVER'></Button>
-        <Button title='ADICIONAR'></Button>
+        <Button title='REMOVER' onPress={decrementCount}></Button>
+        <Button title='ADICIONAR' onPress={incrementCount}></Button>
       </View>
       <StatusBar style="auto" />
     </View>
