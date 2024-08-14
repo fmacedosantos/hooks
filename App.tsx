@@ -10,7 +10,9 @@ export default function App() {
   }
 
   const decrementCount = () => {
-    setCount(prevState => prevState-1)
+    if (count > 0){
+      setCount(prevState => prevState-1)
+    }
   }
 
   return (
